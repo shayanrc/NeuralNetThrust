@@ -33,6 +33,7 @@ class Layer {
 	std::vector<Neuron> neurons;
 public:
 	Layer(int input_size, int output_size);
+	Layer(int input_size, int output_size,double _learningRate,double _momentumConstant);
 
 	thrust::host_vector<double> h_inputs;
 	thrust::host_vector<double> h_weights;
@@ -40,9 +41,18 @@ public:
 	thrust::host_vector<double> h_desired_outputs;
 	thrust::host_vector<double> h_dW;
 
+
+	double getLearningRate() const;
+	void setLearningRate(double learningRate);
+	double getMomentumConstant() const;
+	void setMomentumConstant(double momentumConstant);
+	int getNoOfInputs() const;
+	int getNoOfNeurons() const;
+
+
 	void feedForward();
 	void calculateError();
-	void propagateBack(thrust::device_vector<double> );
+	void propagateBack(thrust::device_vector<double>);
 	void modifyweights();
 };
 

@@ -23,6 +23,17 @@ Layer::Layer(int input_size, int output_size)
 	d_outputs=thrust::device_vector<double>(no_of_neurons);
 	d_desired_outputs=thrust::device_vector<double>(no_of_neurons);
 	d_dW=thrust::device_vector<double>(no_of_neurons);
+
+	learningRate=1;
+	momentumConstant=0;
+}
+
+Layer::Layer(int input_size, int output_size,double _learningRate,double _momentumConstant)
+{
+	Layer(input_size,output_size);
+	learningRate=_learningRate;
+	momentumConstant=_momentumConstant;
+	learningRate=_learningRate;
 }
 
 //functor for sigmoid activation function
@@ -74,6 +85,7 @@ void Layer::calculateError()
 	thrust::transform(d_desired_outputs.begin(),d_desired_outputs.end(),d_outputs.begin(),d_dW.begin(),thrust::minus<double>());
 
 }
+
 
 void Layer::propagateBack(thrust::device_vector<double> prev_dW)
 {
@@ -150,4 +162,28 @@ void Layer::modifyweights()
 		thrust::transform(d_inputs.begin(),d_inputs.end(),neurons[neuronIndex].d_momentum.begin(),modifymomentum_functor<double>(momentumConstant));
 	}
 
+}
+
+double Layer::getLearningRate() const {
+	return learningRate;
+}
+
+void Layer::setLearningRate(double learningRate) {
+	this->learningRate = learningRate;
+}
+
+double Layer::getMomentumConstant() const {
+	return momentumConstant;
+}
+
+void Layer::setMomentumConstant(double momentumConstant) {
+	this->momentumConstant = momentumConstant;
+}
+
+int Layer::getNoOfInputs() const {
+	return no_of_inputs;
+}
+
+int Layer::getNoOfNeurons() const {
+	return no_of_neurons;
 }
