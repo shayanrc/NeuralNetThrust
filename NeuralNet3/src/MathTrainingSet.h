@@ -11,6 +11,7 @@
 #include <vector>
 #include <algorithm>
 #include <stdlib.h>
+#include <cmath>
 #include "TrainingSet.h"
 
 class MathTrainingSet: public TrainingSet {
@@ -24,7 +25,7 @@ class MathTrainingSet: public TrainingSet {
 public:
     //bool next();
 	MathTrainingSet(int no_of_patterns);
-	//virtual ~MathTrainingSet();
+	virtual ~MathTrainingSet();
     std::vector<double> getInputSet();
     std::vector<double> getDesiredOutputSet();
 };

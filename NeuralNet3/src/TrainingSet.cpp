@@ -14,6 +14,8 @@ TrainingSet::TrainingSet(int no_of_patterns)
         patternCount=no_of_patterns;
 }
 
+TrainingSet::~TrainingSet(){}
+
 int TrainingSet::getPatternCount()
 {
     return patternCount;

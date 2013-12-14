@@ -88,7 +88,7 @@ std::vector<double> MathTrainingSet::getInputSet()
     inputSet[0]=input1[iteratorPosition];
     inputSet[1]=input2[iteratorPosition];
     inputSet[2]=input3[iteratorPosition];
-    
+    standardize(&inputSet[0],inputSet.size());
     return inputSet;
     
 }
@@ -99,15 +99,9 @@ std::vector<double> MathTrainingSet::getDesiredOutputSet()
     desiredOutputSet[0]=desiredoutput1[iteratorPosition];
     desiredOutputSet[1]=desiredoutput2[iteratorPosition];
     desiredOutputSet[2]=desiredoutput3[iteratorPosition];
-    
+    standardize(&desiredOutputSet[0],desiredOutputSet.size());
     return desiredOutputSet;
 }
 
-
-//MathTrainingSet::~MathTrainingSet()
-//{
-//	// TODO Auto-generated destructor stub
-//}
-
-
+MathTrainingSet::~MathTrainingSet(){}
 
