@@ -10,6 +10,9 @@
 
 #include "MathTrainingSet.h"
 #include "Layer.h"
+#include "utils.h"
+#include "Network.h"
+#include "IOUtils/CSVWriter.h"
 
 
 class Network {
@@ -22,7 +25,21 @@ class Network {
 
 public:
 	Network(int layerCount, int inputCount, int outputCount, double learningRate, double momentum);
+
+	void randomizeWeights();
+
 	void train();
+
+	int getNoOfInputs() const ;
+
+	int getNoOfLayers() const ;
+
+	int getNoOfOutputs() const ;
+
+	MathTrainingSet getTrainingset() const ;
+
+	void setTrainingset(MathTrainingSet trainingset) ;
+	
 };
 
 #endif /* NETWORK_H_ */
