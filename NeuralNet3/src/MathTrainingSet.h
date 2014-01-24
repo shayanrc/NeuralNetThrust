@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <cmath>
+#include <iostream>
 #include "TrainingSet.h"
 
 class MathTrainingSet: public TrainingSet {
@@ -21,13 +22,16 @@ class MathTrainingSet: public TrainingSet {
 	std::vector<double> desiredoutput1;
 	std::vector<double> desiredoutput2;
 	std::vector<double> desiredoutput3;
-	//struct gen_rand;
+
 public:
-    //bool next();
-	MathTrainingSet(int no_of_patterns);
+    MathTrainingSet(int no_of_patterns);
 	virtual ~MathTrainingSet();
     std::vector<double> getInputSet();
     std::vector<double> getDesiredOutputSet();
 };
+
+
+void normalize(std::vector<double>& data);
+void standardize(double *data, int dataSize);
 
 #endif /* MATHTRAININGSET_H_ */
