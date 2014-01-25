@@ -23,11 +23,18 @@ class MathTrainingSet: public TrainingSet {
 	std::vector<double> desiredoutput2;
 	std::vector<double> desiredoutput3;
 
+	//Offset of the desired output to actual calculated output: Useful for predicting future values
+	int desiredOutputOffset;
+
 public:
     MathTrainingSet(int no_of_patterns);
 	virtual ~MathTrainingSet();
     std::vector<double> getInputSet();
+    //Returns the outputs for a future input(How far in the future is determined by the offset)
     std::vector<double> getDesiredOutputSet();
+    //Returns the actual outputs for the given inputs
+    std::vector<double> getOutputSet();
+    void setDesiredOutputOffset(int offset);
 };
 
 

@@ -56,10 +56,11 @@ MathTrainingSet::MathTrainingSet(int no_of_patterns):TrainingSet(no_of_patterns)
     */
 
     //Fill input vetors with a series (AP) upto limit (passed as argument to gen_ap)
-	std::generate(input1.begin(),input1.end(),gen_ap(100));
-	std::generate(input2.begin(),input2.end(),gen_ap(120));
-	std::generate(input3.begin(),input3.end(),gen_ap(140));
+	std::generate(input1.begin(),input1.end(),gen_ap(300));
+	std::generate(input2.begin(),input2.end(),gen_ap(600));
+	std::generate(input3.begin(),input3.end(),gen_ap(900));
     
+	desiredOutputOffset=0;
     for (int i=0; i<patternCount; i++) {
     	desiredoutput1[i]=input1[i]*input2[i]+input2[i]+input3[i]+223;
         desiredoutput2[i]=3*input1[i]*input1[i]+4*input3[i]+12;
@@ -73,6 +74,11 @@ MathTrainingSet::MathTrainingSet(int no_of_patterns):TrainingSet(no_of_patterns)
     normalize(desiredoutput2);
     normalize(desiredoutput3);
     
+}
+
+void MathTrainingSet::setDesiredOutputOffset(int offset)
+{
+	desiredOutputOffset=offset;
 }
 
 void normalize(std::vector<double>& data)
@@ -152,13 +158,27 @@ void standardize(double *data, int dataSize)
 
 std::vector<double> MathTrainingSet::getInputSet()
 {
-    std::vector<double> inputSet(3);
-    
+	std::vector<double> inputSet(3);
+	//std::vector<double> delayedOutputSet(3);
+
     inputSet[0]=input1[iteratorPosition];
     inputSet[1]=input2[iteratorPosition];
     inputSet[2]=input3[iteratorPosition];
-    //normalize(inputSet);
+    /*if(iteratorPosition>0)
+    {
+		delayedOutputSet[0]=desiredoutput1[iteratorPosition-1];
+		delayedOutputSet[1]=desiredoutput2[iteratorPosition-1];
+		delayedOutputSet[2]=desiredoutput3[iteratorPosition-1];
+    }
+    else
+    {
+		delayedOutputSet[0]=0;
+		delayedOutputSet[1]=0;
+		delayedOutputSet[2]=0;
 
+    }
+
+    inputSet.insert(inputSet.end(),delayedOutputSet.begin(),delayedOutputSet.end());*/
     //standardize(&inputSet[0],inputSet.size());
     return inputSet;
     
@@ -166,13 +186,32 @@ std::vector<double> MathTrainingSet::getInputSet()
 std::vector<double> MathTrainingSet::getDesiredOutputSet()
 {
     std::vector<double> desiredOutputSet(3);
-    
-    desiredOutputSet[0]=desiredoutput1[iteratorPosition];
-    desiredOutputSet[1]=desiredoutput2[iteratorPosition];
-    desiredOutputSet[2]=desiredoutput3[iteratorPosition];
+    //int offset=15;
+    if(iteratorPosition<patternCount+desiredOutputOffset)
+    {
+    	desiredOutputSet[0]=desiredoutput1[iteratorPosition+desiredOutputOffset];
+    	desiredOutputSet[1]=desiredoutput2[iteratorPosition+desiredOutputOffset];
+    	desiredOutputSet[2]=desiredoutput3[iteratorPosition+desiredOutputOffset];
+    }
+    else
+    {
+    	desiredOutputSet[0]=desiredoutput1[iteratorPosition];
+    	desiredOutputSet[1]=desiredoutput2[iteratorPosition];
+    	desiredOutputSet[2]=desiredoutput3[iteratorPosition];
+    }
     //normalize(desiredOutputSet);
     //standardize(&desiredOutputSet[0],desiredOutputSet.size());
     return desiredOutputSet;
+}
+
+std::vector<double> MathTrainingSet::getOutputSet()
+{
+	std::vector<double> outputSet(3);
+	outputSet[0]=desiredoutput1[iteratorPosition];
+	outputSet[1]=desiredoutput2[iteratorPosition];
+	outputSet[2]=desiredoutput3[iteratorPosition];
+
+	return outputSet;
 }
 
 MathTrainingSet::~MathTrainingSet(){}
