@@ -17,18 +17,22 @@
 int main()
 {
 
-	int no_of_layers=2;
+	int no_of_layers=3;
 	int no_of_inputs=3;
 	int no_of_outputs=3;
 
 	double momentum=0;
-	double learninRate=0.8;
+	double learninRate=1;
 
 	//seed random number generators
 	srand(time(NULL));
 
-	MathTrainingSet trainingset(500);
 
+	//init training set
+	MathTrainingSet trainingset(1000);
+
+	trainingset.setDesiredOutputOffset(10);
+	//init network
 	Network net(no_of_layers,no_of_inputs,no_of_outputs,learninRate,momentum);
 
 	net.randomizeWeights();
