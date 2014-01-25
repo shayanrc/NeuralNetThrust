@@ -14,7 +14,9 @@ Network::Network(int layerCount, int inputCount, int outputCount, double learnin
 {
 no_of_layers=layerCount;
 //layers=std::vector<Layer>(layerCount,Layer(inputCount,outputCount,learningRate,momentum));
-layers=std::vector<Layer>(layerCount,Layer(inputCount,outputCount));
+Layer inputLayer(inputCount,outputCount);
+layers=std::vector<Layer>(layerCount-1,Layer(outputCount,outputCount));
+layers.insert(layers.begin(),inputLayer);
 
 }
 
@@ -26,6 +28,8 @@ void Network::randomizeWeights()
 		layers[layerIndex].randomizeWeights();
 	}
 }
+
+
 
 void Network::train()
 {
@@ -78,7 +82,8 @@ void Network::train()
 				std::cout<<"Output : \n";
 				printVector(outputVec);
 				std::cout<<"Desired Output : ";
-				desiredOutputVec=layers[activeLayer].getDesiredOutputs();
+				//desiredOutputVec=layers[activeLayer].getDesiredOutputs();
+				desiredOutputVec=trainingset.getOutputSet();
 				printVector(desiredOutputVec);
 				std::cout<<"\nError: ";
 				errorVec=layers[activeLayer].getError();
