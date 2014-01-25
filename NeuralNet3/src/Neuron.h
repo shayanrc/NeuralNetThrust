@@ -11,6 +11,7 @@
 
 #include <thrust/device_vector.h>
 #include <thrust/host_vector.h>
+#include <ctime>
 
 
 
@@ -22,8 +23,9 @@
 		thrust::host_vector<double> h_weightVector;
 		thrust::device_vector<double> d_momentum;
 		thrust::host_vector<double> h_momentum;
-		//std::vector<double> weightVector;
 		Neuron(int no_of_inputs);
+
+		void randomizeWeights();
 
 		virtual ~Neuron();
 	};

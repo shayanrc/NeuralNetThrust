@@ -10,11 +10,11 @@
 
 struct randomize
 	{
+		//int seed=0;
 		__host__  void operator()( double &x ) const {
-		x=(double) (rand() % 1000000) / 1000000 - 0.5;
-
-	}
-};
+			x=(double) (rand() % 1000000) / 1000000 - 0.5;
+		}
+	};
 
 	Neuron::Neuron(int no_of_inputs)
 	{
@@ -26,6 +26,12 @@ struct randomize
 		d_weightVector=h_weightVector;
 		d_momentum=	thrust::device_vector<double>(no_of_inputs,0);
 		h_momentum=	thrust::host_vector<double>(no_of_inputs,0);;
+	}
+
+	void Neuron::randomizeWeights()
+	{
+		thrust::for_each(h_weightVector.begin(),h_weightVector.end(),randomize());
+		d_weightVector=h_weightVector;
 	}
 
 	Neuron::~Neuron()
