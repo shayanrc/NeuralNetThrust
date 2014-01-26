@@ -15,7 +15,10 @@ Network::Network(int layerCount, int inputCount, int outputCount, double learnin
 no_of_layers=layerCount;
 //layers=std::vector<Layer>(layerCount,Layer(inputCount,outputCount,learningRate,momentum));
 Layer inputLayer(inputCount,outputCount);
-layers=std::vector<Layer>(layerCount-1,Layer(outputCount,outputCount));
+if(layerCount>1)
+{
+	layers=std::vector<Layer>(layerCount-1,Layer(outputCount,outputCount));
+}
 layers.insert(layers.begin(),inputLayer);
 
 }
