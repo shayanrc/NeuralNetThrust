@@ -10,7 +10,7 @@
 
 #include "MathTrainingSet.h"
 #include "Layer.h"
-#include "utils.h"
+#include "IOUtils/utils.h"
 #include "Network.h"
 #include "IOUtils/CSVWriter.h"
 

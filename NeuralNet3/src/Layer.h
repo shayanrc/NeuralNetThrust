@@ -15,7 +15,7 @@
 #include <thrust/transform.h>
 #include <thrust/functional.h>
 #include <vector>
-#include "utils.h"
+#include "IOUtils/utils.h"
 
 #include "Neuron.h"
 
