@@ -9,7 +9,7 @@
 
 CSVWriter::CSVWriter(std::string CSVFileName)
 {
- CSVFile.open(CSVFileName.c_str(),std::ios::trunc);
+ CSVFile.open(CSVFileName.c_str(),std::ios::out);
 }
 
 
@@ -27,6 +27,5 @@ bool CSVWriter::write(std::vector<T> data)
 
 CSVWriter::~CSVWriter()
 {
-	std::cout<<"CSVWriter called!!";
 	CSVFile.close();
 }
