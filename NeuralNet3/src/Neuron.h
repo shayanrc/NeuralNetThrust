@@ -18,6 +18,9 @@
 
 	class Neuron {
 
+	protected:
+		int inputCount;
+
 	public:
 		thrust::device_vector<double> d_weightVector;
 		thrust::host_vector<double> h_weightVector;
@@ -26,7 +29,7 @@
 		Neuron(int no_of_inputs);
 
 		void randomizeWeights();
-
+		int getInputCount();
 		virtual ~Neuron();
 	};
 

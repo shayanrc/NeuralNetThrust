@@ -1,5 +1,5 @@
 /*
- * Layer.h
+  * Layer.h
  *
  *  Created on: 04-Dec-2013
  *      Author: xion
@@ -14,13 +14,16 @@
 #include <thrust/host_vector.h>
 #include <thrust/transform.h>
 #include <thrust/functional.h>
-#include <vector>
 #include "IOUtils/utils.h"
+#include <vector>
+#include <string>
 
 #include "Neuron.h"
 
 
 class Layer {
+
+protected:
 	int no_of_inputs;
 	int no_of_neurons;
 
@@ -37,15 +40,17 @@ class Layer {
 	void init(int input_size, int output_size);
 
 public:
+
+	Layer();
 	Layer(int input_size, int output_size);
 	Layer(int input_size, int output_size,double _learningRate,double _momentumConstant);
 
+	virtual void identify();
 	void randomizeWeights();
 
 	thrust::host_vector<double> h_inputs;
-	//thrust::host_vector<double> h_weights;
 	thrust::host_vector<double> h_outputs;
-	thrust::host_vector<double> h_desired_outputs;
+	thrust::host_vector<double> h_desired_outputs; //TODO Move these to OutputLayer class
 	thrust::host_vector<double> h_dW;
 
 
@@ -57,21 +62,21 @@ public:
 	int getNoOfNeurons() const;
 
 
-	void feedForward();
-	void propagateOutput(Layer &layer);
-	void calculateError();
-	void propagateBack(Layer &layer);
-	void modifyweights();
+	virtual void feedForward();
+	void propagateOutput(Layer *layer);
+	void calculateError();//TODO Move these to OutputLayer class
+	void propagateBack(Layer *layer);
+	virtual void modifyweights();
 
 	void setInputs(std::vector<double> inputs);
 	void setInputs(thrust::host_vector<double> inputs);
-	void setDesiredOutputs(std::vector<double> outputs);
+	void setDesiredOutputs(std::vector<double> outputs); //TODO Move these to OutputLayer class
 
 
-	std::vector<double> getDesiredOutputs();
+	std::vector<double> getDesiredOutputs(); //TODO Move these to OutputLayer class
 	std::vector<double> getOutputs();
 	std::vector<double> getinputs();
-	std::vector<double> getError();
+	std::vector<double> getError(); //TODO Move these to OutputLayer class
 
 };
 

@@ -7,40 +7,35 @@
  * this software and related documentation outside the terms of the EULA
  * is strictly prohibited.
  */
-#include <thrust/device_vector.h>
-#include <thrust/host_vector.h>
-#include <thrust/reduce.h>
+
 #include "Network.h"
-#include "MathTrainingSet.h"
+#include "StockDataTrainingSet.h"
+#include "EntityInputLayer.h"
 #include "Layer.h"
 
 int main()
 {
 
-	int no_of_layers=3;
-	int no_of_inputs=3;
-	int no_of_outputs=3;
-
-	double momentum=0;
-	double learninRate=1;
-
-	//seed random number generators
-	srand(time(NULL));
-
-
 	//init training set
-	MathTrainingSet trainingset(1000);
+	static const int arr[] = {2,3,4,5,6,7,8,9};//index of columns we want
+	std::vector<int> requiredColumn(arr, arr + sizeof(arr) / sizeof(arr[0]) );//vector containing index of columns we want
+	Time startDate=makeDate(9,1,2013);
+	Time endDate=makeDate(9,1,2014);
+	StockDataTrainingSet *test = new StockDataTrainingSet("/home/xion/Data2/",requiredColumn,startDate,endDate);
 
-	trainingset.setDesiredOutputOffset(10);
+
+	int no_of_ent=test->getNoOfEntities();
+	int no_of_outputs=no_of_ent;
+
 	//init network
-	Network net(no_of_layers,no_of_inputs,no_of_outputs,learninRate,momentum);
-
-	net.randomizeWeights();
-
-	net.setTrainingset(trainingset);
+	Network stockDataNetwork(3,no_of_ent,no_of_outputs,1,0,test);
 
 
-	net.train();
+	EntityInputLayer *inputLayer= new EntityInputLayer(test);
+
+	stockDataNetwork.insertLayer(inputLayer,0);	//TODO replace with setInputLayer
+
+	stockDataNetwork.train();
 
 
 

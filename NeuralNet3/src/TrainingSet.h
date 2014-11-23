@@ -10,6 +10,8 @@
 #define TRAININGSET_H_
 
 #include <vector>
+#include <string>
+#include <iostream>
 
 class TrainingSet {
 
@@ -24,7 +26,14 @@ public:
 	virtual std::vector<double> getDesiredOutputSet()=0;
     int getPatternCount();
     int getIndexofCurrentPattern();
+
+	void setPatternCount(int patternCount) {
+		this->patternCount = patternCount;
+	}
     
 };
+
+//void printVector(std::vector<std::string> data, std::string separator);
+//void printVector(std::vector<double> data, std::string separator) ;
 
 #endif /* TRAININGSET_H_ */
